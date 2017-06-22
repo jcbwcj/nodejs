@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="../lib/bootstrap.css">
+	<script src="../lib/jquery-3.2.1.js"></script>
+	<style>
+		input,button{
+			float: left;
+		}
+		button{
+			margin-left: 4px;
+		}
+		input{
+			margin-left: 10px;
+		}
+	</style>
+	<script>
+		$(function(){
+
+		});
+	</script>
+</head>
+<body>
+	<table class="table table-hover">
+  <caption>千峰1702十大逗比</caption>
+  <thead>
+    <tr>
+      <th>逗比名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TQP</td>
+    </tr>
+  </tbody>
+</table>
+<form action="#">
+	<input type="text"><button type="button" class="btn btn-success">增加</button>
+	<input type="text"><button type="button" class="btn btn-primary">删除</button>
+	<input type="text"><button type="button" class="btn btn-info">查找</button>
+	<br/><br/><br/><input type="text"><input type="text"><button type="button" class="btn btn-warning">修改</button>	
+</form>
+<script>
+	var str;
+	var name;
+	var name2;
+	showhtml();
+	function showhtml(){
+
+		$.ajax({
+			type:'post',
+			url:'http://localhost:8008/show',
+			dataType:'json',
+			data:{
+				name:'laoxie'
+			},
+			success:function(data){
+				console.log(data);
+				show(data);			
+			}
+		})
+	};
+
+	$('.btn').click(function(){
+		
+		name = $(this).prev().val();
+		switch($(this).text()){
+			case '增加':
+				str = 'insert';
+				break;
+			case '删除':
+				str = 'delete';
+				break;
+			case '查找':
+				str = 'select';
+				break;
+			case '修改':
+				str = 'update';
+				name2 = $(this).prev().prev().val();
+				break;
+		}
+		ajax(str,name,name2,showhtml);
+		// showhtml();
+		
+	});
+
+
+	function ajax(str,name,name2,fn){
+
+		$.ajax({
+			type:'post',
+			url:'http://localhost:8008/'+str,
+			dataType:'json',
+			data:{
+				name:name,
+				name2:name2
+			},
+			success:function(data){
+				console.log(data);
+				fn();
+			}
+		});
+	}
+
+
+	function show(data){
+		var res = data.map(function(item){
+			return `
+				<td>${item.name}</td>
+			`;
+		}).join('');
+		$('tbody tr').html(res);
+	}
+</script>
+</body>
+</html>

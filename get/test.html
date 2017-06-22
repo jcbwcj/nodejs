@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<script src="jquery-3.2.1.js"></script>
+</head>
+<body>
+	<script>
+		/*var xhr = new XMLHttpRequest();
+		xhr.open('get','http://localhost:12306/',true);
+		// 路径要写全，不要漏掉http 协议、域名、端口都要有
+		xhr.send();
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState===4&&xhr.status===200){
+				console.log(xhr.responseText);
+			}
+		}*/
+
+
+
+
+
+		$.ajax({
+			type:"get",
+			url:"http://localhost:12306",
+			data:{
+				name:"laoxie"
+			},
+			async:true,
+			success:function(data){
+				console.log(data)
+			}
+		});
+	</script>
+</body>
+</html>

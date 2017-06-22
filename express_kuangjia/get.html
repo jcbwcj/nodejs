@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>express_test</title>
+</head>
+<body>
+	<button>post</button>
+	<button>get</button>
+	<button>all</button>
+</body>
+<script src="../lib/jquery-3.2.1.js"></script>
+<script>
+	var str; 
+	function ajax(i,j){
+		$.ajax({
+			type:i,
+			url:'http://localhost:8008/'+j,
+			data:{
+				name:'laoxie',
+				skill:'js',
+				age:'18'
+			},
+			success:function(data){
+				console.log(data);
+			}
+		})
+	}
+
+	$('button').click(function(){
+		var j;
+		str = $(this).text();
+		switch(str){
+			case 'get':
+				j = 'index';
+				break;
+			case 'post':
+				j = 'home';
+				break;
+			case 'all':
+				j = 'test';
+				str = 'post';
+				break;
+		}
+		ajax(str,j);
+	})
+</script>
+</html>

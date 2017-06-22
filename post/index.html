@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>post请求测试</title>
+</head>
+<body>
+</body>
+<script src="../lib/jquery-3.2.1.js"></script>
+<script>
+	/*function JSON_CALLBACK(data){
+		console.log(data);
+		return data;
+	}*/
+	$.ajax({
+		type:'post',
+		url:"http://localhost:12306",
+		data:{
+			name:"laoxie",
+			skill:'js',
+			age:18
+		},
+		async:true,
+		success:function(data){
+			console.log(data)
+		}
+	})
+</script>
+</html>
