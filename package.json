@@ -1,19 +1,31 @@
 {
   "name": "nodejs_practise",
   "version": "1.0.0",
+  "description": "首先[下载](https://nodejs.org/en/)NodeJS，安装",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "multer": "^1.3.0",
+    "socket.io": "^2.0.3",
     "mysql": "^2.13.0",
+    "cheerio": "^1.0.0-rc.1",
+    "weui": "^1.1.2",
     "gulp": "^3.9.1"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcbwcj/nodejs.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "bugs": {
+    "url": "https://github.com/jcbwcj/nodejs/issues"
+  },
+  "homepage": "https://github.com/jcbwcj/nodejs#readme"
 }

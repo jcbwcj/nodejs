@@ -489,3 +489,69 @@ http.request({
 	console.log('problem with request: ' + e.message);
 }).end();
 ```
+```javascript
+http.get("http://www.tuling123.com/openapi/api?key=c75ba576f50ddaa5fd2a87615d144ecf&info=%E8%AE%B2%E4%B8%AA%E7%AC%91%E8%AF%9D", function(res) {
+	var data = "";
+	res.on('data', function(chunk) {
+		data += chunk
+	})
+	res.on('end', function() {
+		console.log(data)
+	})
+})
+```
+上下两端代码是一样的，http.get本质就是调用http.request的get方法
+```javascript
+var http = require("http");
+//node代理
+//http://www.tuling123.com/openapi/api?key=c75ba576f50ddaa5fd2a87615d144ecf&info=%E8%AE%B2%E4%B8%AA%E7%AC%91%E8%AF%9D
+http.request({
+	hostname: 'localhost',
+	port: '81',
+	path: '/1702/nodedemo/test.php?name=laoxie',
+	method: 'GET'
+}, function(res) {
+	res.setEncoding('utf8');
+	var data = "";
+	res.on('data', function(chunk){
+		data += chunk
+	});
+	res.on('end', function(){
+		//console.log("success")
+		console.log(data);
+	});
+}).on('error', function(e) {
+	console.log('problem with request: ' + e.message);
+}).end();
+```
+
+## 爬虫
+
+cheerio模块，后端的jQ
+
+## websocket
+
+ajax短连接
+
+websocket长连接
+
+```
+//创建一个服务器
+var http = require("http");
+var app = http.createServer(function(req,res){
+	
+});
+
+var ioFn = require("socket.io");
+//实例化服务器，让它支持websocket
+var io = ioFn(app);
+//跟前端进行连接
+io.on("connection",function(socket){
+	//前端跟后端联系的一个重要对象 发送消息的名字 发送消息的内容
+	socket.emit("test","")
+})
+```
+# 服务端
+```javascript
+socket.emit("消息名字","消息内容")
+```
