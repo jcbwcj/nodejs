@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ngApp">
+<head>
+	<meta charset="UTF-8">
+	<title>控制器作用域</title>
+</head>
+<body>
+	<p>1.用$rootScope去通信，共享各控制器之间的数据</p>
+	<p>2.$broadcast:向下(子)广播事件 $emit:向上(父)广播事件 $on:接受广播事件</p>
+	<p>3.本地存储 sessionStorage和localStorage 还有cookie</p>
+	<div ng-controller="fatherCtrl" style="border: 2px solid green;">
+		<p>{{name}}</p>
+		<p>儿子说：{{msg}}</p>
+		<button ng-click="toChild()">给儿子的</button>
+		<button ng-click="toBrother()">给兄弟的</button>
+		<div ng-controller="childCtrl" style="border: 1px solid red;margin:10px;">
+			<p>{{name}}</p>
+			<p>老爸说:{{msg1}}</p>
+			<button ng-click="toFather()">给老爸的</button>
+		</div>
+	</div>
+	<div ng-controller="brotherCtrl" style="border: 2px solid yellow;">
+		<p>{{name}}</p>
+		<p>兄弟说：{{msg}}</p>
+	</div>
+</body>
+</html>
+<script src="../lib/angular.js"></script>
+<script>
+	var app = angular.module('ngApp',[]);
+	app.controller('fatherCtrl',function($scope){
+		$scope.name = 'laozhang';
+		$scope.toChild = function(){
+			$scope.$broadcast('参数名','儿子在干嘛？');
+		};
+		$scope.toBrother = function(){
+			$scope.$emit('brother','兄弟，最近混咋样？');
+		}
+		$scope.$on('father',function(event,data){
+			$scope.msg = data;
+		})
+	});
+	app.controller('brotherCtrl',function($scope,$rootScope){
+		$scope.name = 'laowang';
+		$rootScope.$on('brother',function(event,data){
+			console.log(data);
+			$scope.msg = data;
+		})
+	});
+	app.controller('childCtrl',function($scope){
+		$scope.name = 'xiaozhang';
+		$scope.$on('参数名',function(event,data){
+			console.log(data);
+			$scope.msg1 = data;
+		})
+		$scope.toFather = function(){
+			$scope.$emit('father','爸爸，我在打游戏');
+		}
+		
+	});
+</script>

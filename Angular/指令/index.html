@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mine">
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+</head>
+<body ng-controller="indexCtrl">
+	<p>{{name}}</p>
+	<p style="background: yellow;">ng-bind  {-{表达式}-}</p>
+	<!-- 
+		1.利用ng-bind方式后面不用写表达式
+		2.两种方式都是在script里面的代码跑过时候才识别
+		3.用表达式的方式刚开始因为不识别会显示表达式的字符串
+		4.ng-bind因为不识别会不显示
+		5.ng-bind方式html结构里面写的东西会被覆盖掉
+	-->
+	<p>{{hobby}}</p>
+	<p ng-bind="hobby"></p>
+
+	<p style="background: yellow;">ng-bind-html</p>
+	<!--
+		<img src="         ../拉勾网/img/1.jpg" /><script>alert("123")</script><img src="../拉勾网/img/1.jpg        " />
+		避免遇到类似的xss攻击，使用$sce.trustAsHtml,ng-bind-html安全模式
+	-->
+	<p ng-bind-html="html"></p>
+
+	<p style="background: yellow;" ng-init="skill='ps'">ng-init</p>
+	<!-- 
+		ng-init 
+		1.为变量设置初始值
+		2.只要在ng-app范围内，对任何一其定义的变量均有效；
+		3.其方式为ng-init="变量名称=‘变量值’"；
+		4.注意外边双引号，初始值要用单引号： 
+	 -->
+	<p>{{skill}}</p>
+
+	<p style="background: yellow;">ng-click</p>
+	<button ng-click="dian()">{{button}}</button>
+	
+	<p style="color: red;background: yellow;">ng-model(非常重要) input select textarea</p>
+	<input type="text" ng-model="text">
+	<button ng-click="dian()">{{button}}</button>
+	<p>{{text}}</p>
+	<!-- 
+		ng-model用在textarea中不能写在标签之间，要写在标签属性内 
+	-->
+	<textarea name="aaa" id="" cols="30" rows="10">{{text}}</textarea>
+	<!-- 
+		上下两种写法有区别
+		用表达式写，当在textarea中写入信息时，
+		**上面的会破坏掉双向数据绑定，
+		*因为内容中包括表达式部分，与新输入部分，
+		*并非内容全部都是表达式；
+		**下面的方式，内容全部都是表达式，所以不会有这种影响
+	 -->
+	<textarea name="bbb" id="" cols="30" rows="10" ng-model="text"></textarea>
+	<select ng-model="text">
+		<option value="ni">1</option>
+		<option value="wo">2</option>
+		<option value="ta">3</option>
+	</select>
+
+	<p style="color: red;background: yellow;">ng-repeat</p>
+	<ul>
+		<li ng-repeat="arr in arrs">{{arr.name}} {{arr.skill}}</li>
+	</ul>
+	
+	<p style="color: red;background: yellow;">ng-repeat + ng-model</p>
+	<table>
+		<tr>
+			<th>姓名</th>
+			<th>技能</th>
+		</tr>
+		<tr ng-repeat="arr in arrs">
+			<th>{{arr.name}}</th>
+			<th>{{arr.skill}}</th>
+		</tr>
+	</table>
+	
+	姓名：<select ng-model="skill">
+		<option ng-repeat="arr in arrs" ng-value="arr.skill">{{arr.name}}</option>
+	</select>
+	<p>技能：{{skill}}</p>
+	
+	<!-- 
+		ng-show 显示  ng-hide 隐藏
+		后面写boolean值，true则显示/隐藏
+	 -->
+	<p style="color: red;background: yellow;">ng-show</p>
+	<p ng-show="bool">Hello</p>
+	
+	<p style="color: red;background: yellow;">ng-hide</p>
+	<p ng-hide="!bool">Hello</p>
+	<button ng-click="bool=!bool">显示/隐藏</button>
+	
+	<!-- 
+		ng-if = "bool" 
+		ng-if直接把DOM节点删除，或者插入DOM节点
+		ng-if比ng-show效率高一点 
+	-->
+	<p style="color: red;background: yellow;">ng-if</p>
+	<p ng-if="bool">Hello</p>
+
+	<!-- 
+		ng-class
+		指令用于给 HTML 元素动态绑定一个或多个 CSS 类
+		指令的值可以是字符串，对象，或一个数组
+		若为对象 键名为需要添加的类名，键值为布尔值，true则添加
+	 -->
+	<p style="color: red;background: yellow;">ng-class</p>	
+	<p class="{{bool?'red':''}}">ng-class 添加一个类名</p>
+	<p ng-class="{'red':false,'size':bool}">ng-class 添加多个类名</p>
+	
+	<style>
+		.red {
+			color: red;
+		}
+		.size{
+			font-size: 30px;
+		}
+	</style>
+
+	<p style="color: red;background: yellow;">ng-style</p>
+	<input ng-model="size" type="range" />
+	<select ng-model="color">
+		<option value="blue">blue</option>
+		<option value="green">green</option>
+		<option value="red">red</option>
+	</select>
+	<p ng-style="{color:color,fontSize:size+'px'}">style 变变变</p>
+	
+	<!-- 特例 ng-src，ng-href 后面接表达式 -->
+	<p style="color: red;background: yellow;">ng-src</p>
+	<img ng-src="{{src}}" />
+	<p style="color: red;background: yellow;">ng-href</p>
+	<a ng-href="{{href}}"></a>
+</body>
+</html>
+<script src="../lib/angular.js"></script>
+<script>
+	var my = angular.module('mine',[]);
+	my.controller('indexCtrl',function($scope,$sce){
+		$scope.name = 'laowang';
+		$scope.hobby = 'neighbour';
+
+		$scope.html = "<p>123<span>456</span></p>";
+		$scope.html = $sce.trustAsHtml($scope.html);
+		$scope.button = '点我我会变哦';
+		$scope.text = '';
+		$scope.bool = true;
+		$scope.size = 20;
+		$scope.color = 'red';
+		$scope.dian = function(){
+			$scope.button = '你看我变了吧';
+			console.log($scope.text)
+		}
+		
+
+		$scope.arrs = [{
+			name:'laoxie',
+			skill:'js'
+		},{
+			name:'laoyao',
+			skill:'ps'
+		},{
+			name:'laolan',
+			skill:'css'
+		},{
+			name:'lemon',
+			skill:'html'
+		}]
+
+		
+	})
+</script>

@@ -1,0 +1,511 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="format-detection" content="telephone=no, email=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<meta http-equiv="Cache-Control" content="no-transform">
+		<meta http-equiv="Cache-Control" content="no-siteapp">
+
+		<title>拉勾网</title>
+
+		<meta content="拉勾,拉勾网,拉勾招聘,拉钩, 拉钩网 ,互联网招聘,拉勾互联网招聘, 移动互联网招聘, 垂直互联网招聘, 微信招聘, 微博招聘, 拉勾官网, 拉勾百科,跳槽, 高薪职位, 互联网圈子, IT招聘, 职场招聘, 猎头招聘,O2O招聘, LBS招聘, 社交招聘, 校园招聘, 校招,社会招聘,社招" name="keywords">
+
+		<meta content="拉勾网是3W旗下的互联网领域垂直招聘网站" name="description">
+
+		<link href="//www.lgstatic.com/m/css/dep/normalize.css-3.0.2/normalize.css?v=201706062006" rel="stylesheet">
+
+		<link rel="Shortcut Icon" href="//www.lgstatic.com/m/images/asset/common/img/favicon.ico?v=201706062006">
+
+		<link href="//www.lgstatic.com/m/css/asset/custom/search/css/search.css?v=201706062006" rel="stylesheet">
+
+		<link rel="stylesheet" href="css/weui.css">
+		<script src="js/jquery-3.1.1.min.js"></script>
+
+		<!--<script data-require-id="custom/search/main" src="//www.lgstatic.com/m/js/asset/custom/search/main.js?v=201706062006" async=""></script>-->
+	</head>
+
+	<body ontouchstart="">
+
+		<header id="header">拉勾网</header>
+
+		<div id="content">
+			<div class="linputer">
+				<div class="lbutton">
+					<span class="city">全国</span>
+					<span class="cityicon"></span>
+				</div>
+				<div class="rinput">
+					<input class="inputer" type="text" placeholder="搜索职位或公司">
+					<span class="search"><em class="searchicon"></em></span>
+				</div>
+			</div>
+			<div class="listcon">
+				<ul class="history" style="display: none;"></ul>
+				<div class="custominfo none">
+					将搜索地区和关键词设为定制条件
+				</div>
+				<ul class="list"></ul>
+			</div>
+		</div>
+		
+		<div class="weui-panel weui-panel_access">
+        <!--<div class="weui-panel__hd">图文组合列表</div>-->
+        <div class="weui-panel__bd">
+        </div>
+        <!-- <div class="weui-panel__ft">
+            <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link" onclick="loadMore()">
+                <div class="weui-cell__bd">查看更多</div>
+                <span class="weui-cell__ft"></span>
+            </a>
+        </div>
+        <div class="page__bd">
+            <div class="weui-loadmore">
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
+            </div>
+            <div class="weui-loadmore weui-loadmore_line">
+                <span class="weui-loadmore__tips">暂无数据</span>
+            </div>
+            <div class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+                <span class="weui-loadmore__tips"></span>
+            </div>
+        </div> -->
+	   <!--  <div id="loadingToast">
+	       <div class="weui-mask_transparent weui-mask"></div>
+	       <div class="weui-toast">
+	           <i class="weui-loading weui-icon_toast"></i>
+	           <p class="weui-toast__content">数据加载中</p>
+	       </div>
+	   </div> -->
+
+	    <div class="weui-skin_android" id="androidActionsheet" style="opacity: 1; display: none;">
+	   	        <div class="weui-mask"></div>
+	   	        <div class="weui-actionsheet">
+	   	            <div class="weui-actionsheet__menu">
+	   	                <div class="weui-actionsheet__cell" onclick="doUpload()">查询不到该数据，请搜索其他关键字</div>
+	   	            </div>
+	   	        </div>
+	    </div>
+
+		<footer id="footer">
+			<!--通用footer组件模板@author pooky@lagou.com-->
+			<div data-name="职位" data-index="0" data-type="custom" class="footer-tab-custom"><span class="icon"></span><span class="text">职位</span></div>
+			<div data-name="搜索" data-index="1" data-type="search" class="footer-tab-search selected"><span class="icon selected"></span><span class="text">搜索</span></div>
+			<div data-name="我的" data-index="2" data-type="mine" class="footer-tab-mine"><span class="icon"></span><span class="text">我的</span></div>
+		</footer>
+
+		<!-- dep -->
+
+		
+
+		<!--<script type="text/javascript">
+			var global = {};
+			try {
+				global.custom = 'null';
+				global.isLogin = false;
+				global.cities = [{
+					"cityList": ["北京", "上海", "广州", "深圳", "成都", "杭州"],
+					"name": "热门城市",
+					"nameStr": "热门城市"
+				}, {
+					"cityList": ["保定", "北京", "包头", "长春", "成都", "重庆", "长沙", "常州", "沧州", "东莞", "大连", "东营", "德阳", "佛山", "阜阳", "福州"],
+					"name": "",
+					"nameStr": "ABCDEF"
+				}, {
+					"cityList": ["桂林", "贵阳", "广州", "赣州", "淮安", "邯郸", "哈尔滨", "合肥", "呼和浩特", "海口", "黄石", "杭州", "惠州", "湖州", "金华", "九江", "江门", "济南", "济宁", "嘉兴", "揭阳", "晋中"],
+					"name": "",
+					"nameStr": "GHIJ"
+				}, {
+					"cityList": ["昆明", "廊坊", "拉萨", "丽水", "临沂", "洛阳", "连云港", "兰州", "柳州", "泸州", "茂名", "绵阳", "梅州", "宁波", "南昌", "南充", "南京", "南宁", "南通", "南阳"],
+					"name": "",
+					"nameStr": "KLMN"
+				}, {
+					"cityList": ["莆田", "青岛", "秦皇岛", "清远", "泉州", "日照"],
+					"name": "",
+					"nameStr": "OPQR"
+				}, {
+					"cityList": ["韶关", "上海", "石家庄", "汕头", "绍兴", "沈阳", "三亚", "深圳", "苏州", "泰安", "天津", "唐山", "太原", "台州", "泰州"],
+					"name": "",
+					"nameStr": "STUV"
+				}, {
+					"cityList": ["潍坊", "武汉", "芜湖", "威海", "乌鲁木齐", "无锡", "温州", "西安", "香港特别行政区", "厦门", "西宁", "新乡", "咸阳", "徐州", "盐城", "银川", "烟台", "扬州", "淄博", "珠海", "镇江", "湛江", "肇庆", "中山", "郑州", "漳州", "株洲"],
+					"name": "",
+					"nameStr": "WXYZ"
+				}];
+			} catch(e) {
+				throw 'params error!';
+			}
+			require(['custom/search/main']);
+		</script>-->
+
+		<div id="fulldialog-cid-1" class="fdialog-container">
+
+			<div id="fulldialog-hid-1" class="fdialog-header">拉勾网
+				<div class="left"><span class="corner"></span></div>
+			</div>
+			<div id="fulldialog-conid-1" class="fdialog-content">
+				<div class="fdialog-rcon">
+					<!--通用城市组件模板@author pooky@lagou.com-->
+					<div class="cities-header">热门城市</div>
+					<table class="cities-list">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="北京">北京</td>
+								<td class="activeable cities-item" data-item="上海">上海</td>
+								<td class="activeable cities-item" data-item="广州">广州</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="深圳">深圳</td>
+								<td class="activeable cities-item" data-item="成都">成都</td>
+								<td class="activeable cities-item" data-item="杭州">杭州</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="cities-header">ABCDEF</div>
+					<table class="cities-list">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="保定">保定</td>
+								<td class="activeable cities-item" data-item="北京">北京</td>
+								<td class="activeable cities-item" data-item="包头">包头</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="长春">长春</td>
+								<td class="activeable cities-item" data-item="成都">成都</td>
+								<td class="activeable cities-item" data-item="重庆">重庆</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="长沙">长沙</td>
+								<td class="activeable cities-item" data-item="常州">常州</td>
+								<td class="activeable cities-item" data-item="沧州">沧州</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="东莞">东莞</td>
+								<td class="activeable cities-item" data-item="大连">大连</td>
+								<td class="activeable cities-item" data-item="东营">东营</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="德阳">德阳</td>
+								<td class="activeable cities-item" data-item="佛山">佛山</td>
+								<td class="activeable cities-item" data-item="阜阳">阜阳</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="福州">福州</td>
+								<td class="activeable cities-item" data-item="&nbsp;">&nbsp;</td>
+								<td class="activeable cities-item" data-item="&nbsp;">&nbsp;</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="cities-header">GHIJ</div>
+					<table class="cities-list">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="桂林">桂林</td>
+								<td class="activeable cities-item" data-item="贵阳">贵阳</td>
+								<td class="activeable cities-item" data-item="广州">广州</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="赣州">赣州</td>
+								<td class="activeable cities-item" data-item="淮安">淮安</td>
+								<td class="activeable cities-item" data-item="邯郸">邯郸</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="哈尔滨">哈尔滨</td>
+								<td class="activeable cities-item" data-item="合肥">合肥</td>
+								<td class="activeable cities-item" data-item="呼和浩特">呼和浩特</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="海口">海口</td>
+								<td class="activeable cities-item" data-item="黄石">黄石</td>
+								<td class="activeable cities-item" data-item="杭州">杭州</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="惠州">惠州</td>
+								<td class="activeable cities-item" data-item="湖州">湖州</td>
+								<td class="activeable cities-item" data-item="金华">金华</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="九江">九江</td>
+								<td class="activeable cities-item" data-item="江门">江门</td>
+								<td class="activeable cities-item" data-item="济南">济南</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="济宁">济宁</td>
+								<td class="activeable cities-item" data-item="嘉兴">嘉兴</td>
+								<td class="activeable cities-item" data-item="揭阳">揭阳</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="晋中">晋中</td>
+								<td class="activeable cities-item" data-item="&nbsp;">&nbsp;</td>
+								<td class="activeable cities-item" data-item="&nbsp;">&nbsp;</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="cities-header">KLMN</div>
+					<table class="cities-list">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="昆明">昆明</td>
+								<td class="activeable cities-item" data-item="廊坊">廊坊</td>
+								<td class="activeable cities-item" data-item="拉萨">拉萨</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="丽水">丽水</td>
+								<td class="activeable cities-item" data-item="临沂">临沂</td>
+								<td class="activeable cities-item" data-item="洛阳">洛阳</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="连云港">连云港</td>
+								<td class="activeable cities-item" data-item="兰州">兰州</td>
+								<td class="activeable cities-item" data-item="柳州">柳州</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="泸州">泸州</td>
+								<td class="activeable cities-item" data-item="茂名">茂名</td>
+								<td class="activeable cities-item" data-item="绵阳">绵阳</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="梅州">梅州</td>
+								<td class="activeable cities-item" data-item="宁波">宁波</td>
+								<td class="activeable cities-item" data-item="南昌">南昌</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="南充">南充</td>
+								<td class="activeable cities-item" data-item="南京">南京</td>
+								<td class="activeable cities-item" data-item="南宁">南宁</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="南通">南通</td>
+								<td class="activeable cities-item" data-item="南阳">南阳</td>
+								<td class="activeable cities-item" data-item="&nbsp;">&nbsp;</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="cities-header">OPQR</div>
+					<table class="cities-list">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="莆田">莆田</td>
+								<td class="activeable cities-item" data-item="青岛">青岛</td>
+								<td class="activeable cities-item" data-item="秦皇岛">秦皇岛</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="清远">清远</td>
+								<td class="activeable cities-item" data-item="泉州">泉州</td>
+								<td class="activeable cities-item" data-item="日照">日照</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="cities-header">STUV</div>
+					<table class="cities-list">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="韶关">韶关</td>
+								<td class="activeable cities-item" data-item="上海">上海</td>
+								<td class="activeable cities-item" data-item="石家庄">石家庄</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="汕头">汕头</td>
+								<td class="activeable cities-item" data-item="绍兴">绍兴</td>
+								<td class="activeable cities-item" data-item="沈阳">沈阳</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="三亚">三亚</td>
+								<td class="activeable cities-item" data-item="深圳">深圳</td>
+								<td class="activeable cities-item" data-item="苏州">苏州</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="泰安">泰安</td>
+								<td class="activeable cities-item" data-item="天津">天津</td>
+								<td class="activeable cities-item" data-item="唐山">唐山</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="太原">太原</td>
+								<td class="activeable cities-item" data-item="台州">台州</td>
+								<td class="activeable cities-item" data-item="泰州">泰州</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="cities-header">WXYZ</div>
+					<table class="cities-list">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="潍坊">潍坊</td>
+								<td class="activeable cities-item" data-item="武汉">武汉</td>
+								<td class="activeable cities-item" data-item="芜湖">芜湖</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="威海">威海</td>
+								<td class="activeable cities-item" data-item="乌鲁木齐">乌鲁木齐</td>
+								<td class="activeable cities-item" data-item="无锡">无锡</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="温州">温州</td>
+								<td class="activeable cities-item" data-item="西安">西安</td>
+								<td class="activeable cities-item" data-item="香港特别行政区">香港特别行政区</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="厦门">厦门</td>
+								<td class="activeable cities-item" data-item="西宁">西宁</td>
+								<td class="activeable cities-item" data-item="新乡">新乡</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="咸阳">咸阳</td>
+								<td class="activeable cities-item" data-item="徐州">徐州</td>
+								<td class="activeable cities-item" data-item="盐城">盐城</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="银川">银川</td>
+								<td class="activeable cities-item" data-item="烟台">烟台</td>
+								<td class="activeable cities-item" data-item="扬州">扬州</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="淄博">淄博</td>
+								<td class="activeable cities-item" data-item="珠海">珠海</td>
+								<td class="activeable cities-item" data-item="镇江">镇江</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="湛江">湛江</td>
+								<td class="activeable cities-item" data-item="肇庆">肇庆</td>
+								<td class="activeable cities-item" data-item="中山">中山</td>
+							</tr>
+							<tr class="cities-list-item">
+								<td class="activeable cities-item" data-item="郑州">郑州</td>
+								<td class="activeable cities-item" data-item="漳州">漳州</td>
+								<td class="activeable cities-item" data-item="株洲">株洲</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		// 获取哈希值中对应数据
+	    function GetQueryString(name) {
+	        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	        var r = window.location.search.substr(1).match(reg);
+	        if (r != null) return unescape(r[2]);
+	        return null;
+	    }
+
+	    // 判断有无用户信息 有则显示 无则显示登录注册界面
+	    var username = GetQueryString('username');
+
+		$('.lbutton').click(function(){
+			$('#fulldialog-cid-1').show();
+		})
+		
+		$('#fulldialog-cid-1').on('click','td',function(){
+			//console.log($(this).text())
+			$('#fulldialog-cid-1').hide();
+			$('.lbutton .city').text($(this).text())
+		})
+		
+		$('.search').click(function(){
+			//console.log($(this).prev().val());
+			var msg = $(this).prev().val();
+			/*$(".weui-panel__ft").hide();
+	        $(".page__bd").show();
+	        $("#loadingToast").show();*/
+			$.ajax({
+				type:'post',
+				url:'http://localhost:666/search',
+				data:{
+					msg:msg,
+				},
+				success:function(data){
+					console.log(data);
+					if(data.length == 0){
+						$('#androidActionsheet').show();
+						$('.weui-mask').click(function(){
+							$('#androidActionsheet').hide();
+						})
+					}
+					var html = data.map(function(item) {
+                    	return `
+    						<a href="detail.html?id=${item.id}${username?'&username='+username:''}" class="weui-media-box weui-media-box_appmsg">
+    						<div class="weui-media-box__hd">
+    							<img class="weui-media-box__thumb" src="https:${item.company_img}" alt="">
+    						</div>
+    						<div class="weui-media-box__bd">
+    							<h4 class="weui-media-box__title">${item.company}</h4>
+    							<p class="weui-media-box__desc">${item.description}</p>
+    						</div>
+    						</a>`
+		                }).join("");
+		               
+		               /*	$(".weui-panel__ft").show();
+		               	$(".page__bd").hide();
+		               	$("#loadingToast").hide();*/
+		                $(".weui-panel__bd").append(html);                
+				}
+				
+			})
+		})
+
+        // footer点击跳转
+        $('.footer-tab-custom').click(function(){
+	        location.href = `index.html${username?'?username='+username:''}`;
+	    })
+	    $('.footer-tab-mine').click(function(){
+	        location.href = `mine.html${username?'?username='+username:''}`;
+	    })
+	</script>
+
+</html>
+

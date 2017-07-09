@@ -13,6 +13,8 @@
 </body>
 <script src="js/socket.js"></script>
 <script>
+	// socket为长连接，ajax为短连接（通讯完成立马断开与服务器连接）
+	// 在某些场合，需要长连接通讯时，用socket代替ajax
 	var socket = io('http://localhost:666');
 	socket.on("test", function(data) {
 	    console.log(data);
@@ -23,7 +25,9 @@
 	    html += data +"<br/>";
 	    document.querySelector("p").innerHTML = html;
 	})
-
+	
+	// socket.on  接收数据请求
+	// socket.emit（io.emit）  发送数据请求
 	function send() {
 	    var text = document.querySelector("#input").value;
 	    socket.emit("chat", text)

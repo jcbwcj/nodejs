@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>mine</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" href="css/mine.css" />
+    <link rel="stylesheet" href="css/weui.css" />
+</head>
+
+<body ontouchstart="">
+    <header id="header">拉勾网</header>
+    <div id="content">
+        <div class="logininfo">
+            <!-- 未登录 -->
+            <div class="nologin center">
+                <a class="loginbut" href="login.html" target="_self">登录 / 注册</a>
+            </div>
+        </div>
+        <!-- 登录地址-->
+        <div class="buttons">
+            <a class="button deliver" href="/user/deliverlist.html">
+                <span>投递</span>
+            </a>
+            <a class="button interview" href="/minterview/interviewlist.html">面试
+            </a>
+            <a class="button invitation" href="/minvite/invitation.html">
+                <span>邀约</span>
+            </a>
+            <a class="button collect">收藏
+            </a>
+        </div>
+        <a href="mine.html" class="weui-btn weui-btn_primary" style="background-color: #1fc8a1;">退出登录</a>
+    </div>
+    <footer id="footer">
+        <!--通用footer组件模板@author pooky@lagou.com-->
+        <div data-name="职位" data-index="0" data-type="custom" class="footer-tab-custom">
+            <span class="icon"></span>
+            <span class="text">职位</span>
+        </div>
+        <div data-name="搜索" data-index="1" data-type="search" class="footer-tab-search">
+            <span class="icon"></span>
+            <span class="text">搜索</span>
+        </div>
+        <div data-name="我的" data-index="2" data-type="mine" class="footer-tab-mine selected">
+            <span class="icon selected"></span>
+            <span class="text">我的</span>
+        </div>
+    </footer>
+    <div class="weui-skin_android" id="androidActionsheet" style="opacity: 1;display: none;">
+        <div class="weui-mask"></div>
+        <div class="weui-actionsheet">
+            <div class="weui-actionsheet__menu">
+                <div class="weui-actionsheet__cell" style="display: none;">
+                    <form action="" id="uploadForm">
+                        <!-- 在使用form表单时一定要记得加上name属性，否则提交时会出现问题 -->
+                        <input type="file" name="file" onchange="doUpload()">上传本地头像
+                    </form>
+                </div>
+                <!-- <div class="weui-actionsheet__cell" onclick="doUpload()">确认上传</div> -->
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script>
+    // 上传头像
+    function doUpload(){
+        $.ajax({
+        url: 'http://localhost:666/upload-single',
+            type: 'POST',
+            cache: false, //不必须
+            data: new FormData($('#uploadForm')[0]),
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                console.log(data);
+                $('.headpic').attr('src','uploads/'+data)
+                $.ajax({
+                    url:'http://localhost:666/upload-touxiang',
+                    data:{
+                        imgurl:data,
+                        username:GetQueryString('username')
+                    },
+                    type:'post',
+                    success:function(data){
+                        console.log(data);
+                    }
+                })
+            }
+        })
+    }
+
+
+    // 获取哈希值中对应数据
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    // 判断有无用户信息 有则显示,并显示退出登录按钮 
+    // 无则显示登录注册界面，隐藏退出登录按钮
+    $('.weui-btn_primary').hide();
+    var username = GetQueryString('username');
+    if (username) {
+        $.ajax({
+            url:'http://localhost:666/touxiang',
+            data:{
+                username:username
+            },
+            type:'post',
+            success:function(data){
+                // console.log(data);
+                // 判断该用户是否有自定义头像
+                // 无则使用默认，有则使用自定义
+                //字符串模板中可以进行三元运算 => ${a?b:c} 
+                var str = `
+                    <div class="haslogin center">
+                        <a class="button" href="http://www.lagou.com/center/preview.html" target="_self"> 简历&gt; </a>
+                        <div class="headcon">
+                            <img class="headpic" src="uploads/${data[0].imgurl?data[0].imgurl:'moren.jpg'}">
+                        </div>
+                        <div class="name">${username}</div>
+                    </div>
+                `
+                 $('.logininfo').html(str);
+                 $('.weui-btn_primary').show();
+                 $('.headpic').click(function(){
+                    $('#uploadForm input').trigger('click');
+                    // $('#androidActionsheet').show();
+                })
+            }
+        })
+        
+    }
+   
+
+    $('.footer-tab-custom').click(function(){
+        location.href = `index.html${username?'?username='+username:''}`;
+    })
+    $('.footer-tab-search').click(function(){
+        location.href = `search.html${username?'?username='+username:''}`;
+    })
+
+    $('.weui-mask').click(function(){
+        $('#androidActionsheet').hide();
+    })
+
+    $('.collect').click(function(){
+        location.href = `collectlist.html${username?'?username='+username:''}`
+    })
+    /*$('.weui-actionsheet__cell').click(function(){
+        $.ajax({
+            type: "post",
+            url: "http://localhost:666/imgupload",
+            data: {
+                username: username
+            },
+            async: true,
+            dataType: "json",
+            success:function(data){
+                console.log(data);
+            }
+        })
+    })*/
+</script>
+
+</html>

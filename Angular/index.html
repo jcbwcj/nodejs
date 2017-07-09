@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="test">
+<head>
+	<meta charset="UTF-8">
+	<title>angular测试</title>
+</head>
+<body>
+	<header ng-controller="headerCtrl">{{name}}</header>
+	<main ng-controller="mainCtrl">
+		<p style="color:{{color}};">猜猜我的颜色</p>
+		<button ng-click="change()">改变颜色</button>
+		<p style="color:{{obj.color}};">{{obj.num}}</p>
+		<div ng-bind-html='html'></div>
+	</main>
+</body>
+<script src="lib/angular.js"></script>
+<script>
+	var app = angular.module('test',[]);
+	app.controller('headerCtrl',function($scope){
+		$scope.name = '名鞋库';
+	});
+	
+	app.controller('mainCtrl',function($scope,$sce){
+		$scope.color = 'red';
+		var isShow = true;
+		$scope.change = function(){
+			if(isShow){
+				$scope.color = 'yellow';
+				isShow = false;
+			}else{
+				$scope.color = 'red';
+				isShow = true;
+			}
+		}
+		$scope.obj = {
+			num:668,
+			color:'#f60'
+		};
+		// 为避免xss攻击，默认不识别标签（当做字符串处理）
+		// 若要使用标签，需$sce.trustAsHtml()确认安全才能使用
+		// 且渲染方式不能用{{}},只能用ng-bind-html方式
+		$scope.html = '<p>123<span>456</span></p>';
+		$scope.html = $sce.trustAsHtml($scope.html);
+
+	})
+</script>
+</html>

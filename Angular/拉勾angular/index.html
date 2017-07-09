@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="lagouApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>拉勾网</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" href="css/weui.css" />
+    <link rel="stylesheet" href="css/mine.css" />
+    <link rel="stylesheet" href="css/swiper.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            height: 45px;
+            line-height: 45px;
+            background-color: #00b38a;
+            color: #fff;
+            font-size: 1.8rem;
+            text-align: center;
+            position: relative;
+            width: 100%
+        }
+        
+        footer {
+            width: 100%;
+            height: 45px;
+            line-height: 45px;
+            border-top: 1px solid #e8e8e8;
+            background-color: #f6f6f6;
+            color: #c2cfcc;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 999;
+            display: -moz-box;
+            display: -webkit-box;
+            display: box;
+            font-size: 1.6rem;
+        }
+        
+        #footer div.selected {
+            color: #00b38a;
+            background-color: #e7f3f0;
+        }
+        
+        #footer div {
+            height: 100%;
+            -moz-box-flex: 1;
+            -webkit-box-flex: 1;
+            box-flex: 1;
+            text-align: center;
+        }
+        
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+        
+        .weui-panel__ft {
+            flex: 1;
+            margin-bottom: 53px;
+        }
+        
+        .swiper-slide img {
+            width: 100%;
+            height: 280px;
+        }
+    </style>
+</head>
+
+<body ng-controller="indexCtrl">
+    <header>{{name}}</header>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="./img/2.jpg" /></div>
+            <div class="swiper-slide"><img src="./img/1.jpg" /></div>
+            <div class="swiper-slide"><img src="./img/3.jpg" /></div>
+            <div class="swiper-slide"><img src="./img/4.jpg" /></div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+    <div class="weui-panel weui-panel_access">
+        <!--<div class="weui-panel__hd">图文组合列表</div>-->
+        <div class="weui-panel__bd">
+            <a ng-repeat='a in arrs' href="detail.html?id={{a.id}}{{username?'&username='+username:''}}" class="weui-media-box weui-media-box_appmsg">
+                <div class="weui-media-box__hd">
+                    <img class="weui-media-box__thumb" src="https:{{a.company_img}}">
+                </div>
+                <div class="weui-media-box__bd">
+                    <h4 class="weui-media-box__title">{{a.company}}</h4>
+                    <p class="weui-media-box__desc">{{a.description}}</p>
+                </div>
+            </a>
+
+        </div>
+        <div class="weui-panel__ft" ng-show="!bool">
+            <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link" ng-click="loadMore()" ng-show="!bool2">
+                <div class="weui-cell__bd">查看更多</div>
+                <span class="weui-cell__ft"></span>
+            </a>
+            <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link" ng-show="bool2">
+                <div class="weui-cell__bd">已无更多数据</div>
+                <span class="weui-cell__ft"></span>
+            </a>
+        </div>
+        <div class="page__bd" ng-show="bool">
+            <div class="weui-loadmore">
+                <i class="weui-loading"></i>
+                <span class="weui-loadmore__tips">正在加载</span>
+            </div>
+            <div class="weui-loadmore weui-loadmore_line">
+                <span class="weui-loadmore__tips" >暂无数据</span>
+            </div>
+            <div class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+                <span class="weui-loadmore__tips"></span>
+            </div>
+        </div>
+    </div>
+    <div id="loadingToast" ng-show="bool">
+       <div class="weui-mask_transparent weui-mask"></div>
+       <div class="weui-toast">
+           <i class="weui-loading weui-icon_toast"></i>
+           <p class="weui-toast__content">数据加载中</p>
+       </div>
+   </div>
+    <footer id="footer">
+        <div data-name="职位" data-index="0" data-type="custom" class="footer-tab-custom selected"><span class="icon selected"></span><span class="text">职位</span></div>
+        <div data-name="搜索" data-index="1" data-type="search" class="footer-tab-search"><span class="icon"></span><span class="text">搜索</span></div>
+        <div data-name="我的" data-index="2" data-type="mine" class="footer-tab-mine"><span class="icon"></span><span class="text">我的</span></div>
+    </footer>
+</body>
+<!-- <script src="js/jquery-3.1.1.min.js"></script> -->
+<script src="../lib/angular.js"></script>
+<!-- <script src="js/swiper.jquery.js"></script> -->
+<!-- swiper分为依赖jq和不依赖jq两个版本 -->
+<script src="js/swiper.js"></script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true
+    });
+    var page = 1;
+
+    // 获取哈希值中对应数据
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+    var username = GetQueryString('username');
+// -----------angular改写------------------------------------
+    var app = angular.module('lagouApp',[]);
+    app.controller('indexCtrl',function($scope,$http){
+        $scope.username = GetQueryString('username');
+        $scope.name = '拉勾网';
+        $scope.arrs = [];
+        $scope.bool2 = false;
+        $scope.loadMore = function(){
+            $scope.bool = true;
+            $http({
+                method:'get',
+                url:'http://localhost:666/jobs',
+                params:{
+                    page:page++
+                }
+            }).then(function(data){
+                if(data.data.jobs.length<1){
+                    $scope.bool2 = true;
+                }
+                $scope.arrs = $scope.arrs.concat(data.data.jobs);
+                /*data.data.jobs.map(function(item){
+                    $scope.arrs.push(item);
+                });*/
+                // console.log($scope.arrs);
+                $scope.bool = false;
+
+            })
+        }
+        $scope.loadMore();
+
+    })
+// --------------------------------------------------------
+    /*function loadMore() {
+        $(".weui-panel__ft").hide();
+        $(".page__bd").show();
+        $("#loadingToast").show();
+        $.ajax({
+            url: 'http://localhost:666/jobs',
+            type: 'get',
+            dataType: 'json',
+            async: 'true',
+            data: {
+                page: page++
+            },
+            success: function(data) {
+
+                console.log(data);
+                var html = data.jobs.map(function(item) {
+                    return `
+    						<a href="detail.html?id=${item.id}${username?'&username='+username:''}" class="weui-media-box weui-media-box_appmsg">
+    						<div class="weui-media-box__hd">
+    							<img class="weui-media-box__thumb" src="https:${item.company_img}" alt="">
+    						</div>
+    						<div class="weui-media-box__bd">
+    							<h4 class="weui-media-box__title">${item.company}</h4>
+    							<p class="weui-media-box__desc">${item.description}</p>
+    						</div>
+    						</a>
+    						`
+                }).join("");
+                $(".weui-panel__ft").show();
+                $(".page__bd").hide();
+                $("#loadingToast").hide();
+                $(".weui-panel__bd").append(html)
+            }
+        })
+    }
+    loadMore();
+
+
+    
+    $('.footer-tab-mine').click(function(){
+        location.href = `mine.html${username?'?username='+username:''}`;
+    })
+    $('.footer-tab-search').click(function(){
+        location.href = `search.html${username?'?username='+username:''}`;
+    })*/
+// -------------------------------------------------------------
+</script>
+
+</html>

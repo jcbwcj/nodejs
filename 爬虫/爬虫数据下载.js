@@ -4,7 +4,7 @@ var cheerio = require('cheerio');
 
 var fs = require('fs');
 
-http.get('http://www.mzitu.com/zipai/comment-page-2/',function(res){
+http.get('http://www.mzitu.com/zipai/comment-page-8/',function(res){
 	var data = '';
 	res.on('data',function(chunk){
 		data += chunk;
@@ -38,8 +38,9 @@ var i = 0;
 function download(list){
 	console.log(list[i]);
 	var length = list.length;
+	i = i>=10 ? i : '0' + i;
 	// 创建一个可写流
-	var writeStream = fs.createWriteStream('images/'+ i +'.jpg'); 
+	var writeStream = fs.createWriteStream('images/1'+ i +'.jpg'); 
 	http.get(list[i],function(res){
 		res.pipe(writeStream);
 		if(i < length){

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ngApp">
+<head>
+	<meta charset="UTF-8">
+	<title>标签切换</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		ul{list-style: none;margin:100px 0 20px 100px;overflow: hidden;}
+		li{float:left;line-height: 30px;text-align: center;width: 80px;cursor:pointer;background-color: #ccc;}
+		li.active{background: #fcc;border-bottom:2px solid #f60;}
+		p{margin-left:100px;border:1px solid #ccc;width: 240px;height: 150px;text-align: center;line-height: 150px;}
+	</style>
+</head>
+<body ng-controller="indexCtrl">
+	<ul>
+		<li ng-click="change(1)" ng-class="{'active':page==1}">首页</li>
+		<li ng-click="change(2)" ng-class="{'active':page==2}">娱乐</li>
+		<li ng-click="change(3)" ng-class="{'active':page==3}">军事</li>
+	</ul>
+	<p ng-show="page==1">欢迎登录进入头条</p>
+	<p ng-show="page==2">娱乐乐翻天</p>
+	<p ng-show="page==3">中国军事力量与美军对比</p>
+
+</body>
+</html>
+<script src="../lib/angular.js"></script>
+<script>
+	var app = angular.module('ngApp',[]);
+	app.controller('indexCtrl',function($scope){
+		$scope.page = 1;
+		$scope.change = function(page){
+			$scope.page = page;
+		}
+		/*
+			另一种方式
+		 [
+			 [1,0,0],
+			 [0,1,0],
+			 [0,0,1],
+		 ]
+
+		 */
+	})
+</script>

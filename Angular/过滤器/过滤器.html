@@ -1,0 +1,130 @@
+【<!DOCTYPE html>
+<html lang="en" ng-app="ngApp">
+<head>
+	<meta charset="UTF-8">
+	<title>过滤器</title>
+	<style>
+		div{color: red;background: yellow;}
+	</style>
+</head>
+<body ng-controller="indexCtrl">
+	<div>currency 用于货币</div>
+	<p>{{money|currency:"￥" :3}}</p>
+	<!-- 
+		currency 货币（若什么都不写，默认为美元符，两位小数）
+		number 数字
+		后面的数字可以省略，表示保留几位小数 
+	-->
+	<div>number 用于数字</div>
+	<p>{{money|number:4}}</p>
+	
+	<!-- 
+		*date 
+		yyyy 年
+		MM   月
+		dd   日
+		hh   时
+		mm   分
+		ss   秒
+		EEEE 星期
+		(ps：写几个字母表示是几位数，"月"要大写与"分"区分开来)
+
+		他们之间可以用自定义字符拼接 
+	-->
+	<div>date 用于时间</div>
+	<p>{{time|date: "yyyy年MM月dd日 时间hh:mm:ss 星期EEEE"}}</p>
+
+	<div>uppercase 大写</div>
+	<p ng-bind="str|uppercase"></p>
+
+	<div>lowercase 小写</div>
+	<p ng-bind="str|lowercase"></p>
+
+	<div>json 改为json字符串</div>
+	<p>{{obj|json}}</p>
+	
+	<!-- 
+		orderBy 排序
+		1.格式：xxx|orderBy:'skill':false/true
+		  (关键字需要加引号)
+		2.排序是通过askii码来排，先从第一位字符比较
+		3.若相同再从第二位比较，以此类推
+	 -->
+	<div>orderBy 排序</div>
+	<ul>
+		<li ng-repeat="a in arrs|orderBy:'skill':false">序号 {{a.id}} 名字 {{a.name}} 技能 {{a.skill}}</li>
+	</ul>
+	
+	<!-- 
+		filter
+		可以接受字符串，即需要筛选的键值名xxx|filter:'xxx'
+		也可以接受一个对象，实现筛选xxx|filter:{'sss':'xxx'}
+	 -->
+	<div>filter 过滤</div>
+	<input type="text" ng-model="name">
+	<ul>
+		<!-- <li ng-repeat="a in arrs|filter:name">序号 {{a.id}} 名字 {{a.name}} 技能 {{a.skill}}</li> -->
+		<li ng-repeat="a in arrs|filter:{name:name}">序号 {{a.id}} 名字 {{a.name}} 技能 {{a.skill}}</li>
+	</ul>
+	
+	<!-- 
+		limitTo接受两个数字，第一个数字是长度，第二个是索引值，可以用在数组也可以用在字符串截取上
+		
+		这与mySQL语句的limit相反，mySQL中语法为：
+		select * form xxx limit [index,]num
+		其中参数前面的为索引，后面为数量
+		若索引省略，默认为0
+		若想查到从某一处到最终的记录，可以指定第二个参数为-1
+		eg:
+		mysql> SELECT * FROM table LIMIT 5,10;  // 检索记录行 6-15
+
+		mysql> SELECT * FROM table LIMIT 95,-1; // 检索记录行 96-last.
+
+		//如果只给定一个参数，它表示返回最大的记录行数目： 
+		mysql> SELECT * FROM table LIMIT 5;     //检索前 5 个记录行
+
+		//换句话说，LIMIT n 等价于 LIMIT 0,n。
+	 -->
+	<div>limitTo</div>
+	<p>{{str|limitTo:5:2}}</p>
+	<button ng-click="next()">下一页</button>
+	<ul>
+		<li ng-repeat="a in arrs|limitTo:2:page">序号 {{a.id}} 名字 {{a.name}} 技能 {{a.skill}}</li>
+	</ul>
+</body>
+</html>
+<script src="../lib/angular.js"></script>
+<script>
+	var app = angular.module('ngApp',[]);
+	app.controller('indexCtrl',function($scope){
+		$scope.money = 7439821;
+		$scope.time = 1453196371000;
+
+		$scope.str = 'Wo-shi-NI-dA-yE';
+		$scope.obj = {name:'laowang'};
+
+		$scope.text = '';
+		$scope.arrs = [{
+			id:3,
+			name:'wa',
+			skill:'neighbour'
+		},{
+			id:7,
+			name:'zh',
+			skill:'ps'
+		},{
+			id:2,
+			name:'hu',
+			skill:'abuse'
+		},{
+			id:1,
+			name:'zi',
+			skill:'js'
+		}];
+
+		$scope.page = 0;
+		$scope.next = function() {
+			$scope.page += 2
+		}
+	})
+</script>
